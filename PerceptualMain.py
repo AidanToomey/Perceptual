@@ -21,3 +21,4 @@ while(numOfStrikes <= 3):
     numOfStrikes += 1
 
 #The code after the while loop should be the outcomes of using all three strikes
+#Jack joined
