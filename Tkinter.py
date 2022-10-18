@@ -26,4 +26,7 @@ logo_label.image = logo
 logo_label.grid(column = 0, row = 0)
 
 
+#Amy has new idea
+
+
 win.mainloop()
