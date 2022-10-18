@@ -2,11 +2,10 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-
 # Create an instance of tkinter frame or window
 win = tk.Tk()
 
-
+#change the background color
 
 # Create a canvas widget
 canvas = tk.Canvas(win, width=700, height=350)
