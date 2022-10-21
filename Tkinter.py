@@ -8,8 +8,9 @@ from PIL import Image, ImageTk
 # Create an instance of tkinter frame or window
 win = tk.Tk()
 
-# Create a canvas widget
-canvas = tk.Canvas(win, width=1920, height=1080)
+# Format Window Name and Size
+win.title("Perceptual Software")
+win. geometry('1920x1080')
 
 #Sperates the canvase into diffrent coloms
 win.columnconfigure(5, weight = 1)
