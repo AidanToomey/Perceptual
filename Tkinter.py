@@ -6,17 +6,25 @@ import tkinter
 from PIL import Image, ImageTk
 
 # Create an instance of tkinter frame or window
-win = tk.Tk()
+root = tk.Tk()
 
-# Create a canvas widget
-canvas = tk.Canvas(win, width=1920, height=1080)
+# Format Window Name and Size
+root.title("Perceptual Software")
+root.geometry('1920x1080')
+
+#Add deropdown for debug mode
+menu = Menu (root)
+item = Menu (menu)
+item.add_command(label='Debug')
+menu. add_cascade(label='Debug Menue', menu=item)
+root.config (menu=menu)
 
 #Sperates the canvase into diffrent coloms
-win.columnconfigure(5, weight = 1)
-win.rowconfigure(4, weight = 1)
+root.columnconfigure(5, weight = 1)
+root.rowconfigure(4, weight = 1)
 
 #Create the verticle line seperator
-tkinter.ttk.Separator(win, orient=VERTICAL).grid(column=1, row=0, rowspan=10, sticky='ns', padx=5, pady=5)
+tkinter.ttk.Separator(root, orient=VERTICAL).grid(column=1, row=0, rowspan=10, sticky='ns', padx=5, pady=5)
 
 
 #Logo Loading
@@ -33,4 +41,4 @@ logo_label.image = logo
 logo_label.grid(column = 0, row = 0)
 
 
-win.mainloop()
+root.mainloop()
