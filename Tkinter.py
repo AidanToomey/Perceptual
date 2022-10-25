@@ -13,15 +13,15 @@ root.title("Perceptual Software")
 root.geometry('1920x1080')
 
 #Sperates the canvase into diffrent coloms
-root.columnconfigure(5, weight = 1)
-root.rowconfigure(4, weight = 1)
+root.columnconfigure(6, weight = 1)
+root.rowconfigure(5, weight = 1)
 
 #Add deropdown for debug mode
 def DropdownMenue():
     menu = Menu (root)
     item = Menu (menu)
     item.add_command(label='Debug')
-    menu. add_cascade(label='Debug Menue', menu=item)
+    menu. add_cascade(label='Debug Menu', menu=item)
     root.config (menu=menu)
 
 #Create the verticle line seperator
@@ -36,7 +36,14 @@ def LoadLogo():
     logo_label.grid(column = 0, row = 0)
 
 
-
+#Dashboard drop
+def LoadDashboard():
+    Dashboard = Image.open("Mercades Dashboard .jpeg")
+    Dashboard = Dashboard.resize((1325,500 ))
+    Dashboard = ImageTk.PhotoImage(Dashboard)
+    Dashboard_label = tk.Label(image = Dashboard)
+    Dashboard_label.image = Dashboard
+    Dashboard_label.grid(column = 5, row = 4)
 
 
 
@@ -57,4 +64,5 @@ def LoadLogo():
 
 DropdownMenue()
 LoadLogo()
+LoadDashboard()
 root.mainloop()
