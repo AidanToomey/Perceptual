@@ -24,7 +24,7 @@ def DropdownMenue():
     menu. add_cascade(label='Debug Menu', menu=item)
     root.config (menu=menu)
 
-#Create the verticle line seperator
+#Create the verticle/horizonatal line seperator
 tkinter.ttk.Separator(root, orient=VERTICAL).grid(column=1, row=0, rowspan=10, sticky='ns', padx=0, pady=0)
 tkinter.ttk.Separator(root, orient=HORIZONTAL).grid(column=1, row=1, columnspan=10, sticky='ew', padx=0, pady=0)
 
@@ -47,8 +47,19 @@ def LoadDashboard():
     Dashboard_label.grid(column = 2, row = 4, columnspan=6, rowspan=2)
 
 
+#Create Variables
+#NumOfStrikes = 0
+# NumOfStrikes=Label(root, text = NumOfStrikes)
+# NumOfStrikes.pack()
+
+# IsDrunk = False
+# IsDrunk=Label(root, text = IsDrunk)
+# IsDrunk.pack
 
 
+def update_text(NameOfLabel, UpdatedValue):
+   # Configuring the text in Label widget
+   NameOfLabel.configure(text=UpdatedValue)
 
 
 
