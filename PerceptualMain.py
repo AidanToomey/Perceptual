@@ -64,6 +64,6 @@ MyGUI()
 
 ##Other Teams code
 NumOfStrikes = 0
-while NumOfStrikes <= 3:
-    if(random.randint(1,10) == 5):
+# while NumOfStrikes <= 3:
+#     if(random.randint(1,10) == 5):
         
