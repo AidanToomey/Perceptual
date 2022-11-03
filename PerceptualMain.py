@@ -49,6 +49,13 @@ class MyGUI:
             self.Dashboard_label.image = self.Dashboard
             self.Dashboard_label.grid(column = 2, row = 4, columnspan=6, rowspan=2)
 
+        def Load1stStrike():
+            self.Strike1 = Image.open("1st Strike Distracted driving.jpeg")
+            self.Strike1 = self.Strike1.resize((250, 250))
+            self.Strike1 = ImageTk.PhotoImage(self.Strike1)
+            self.Strike1 = tk.Label(image = self.Strike1)
+            self.Strike1.image = self.Strike1
+            self.Strike1.grid(column=4, row=4)    
 
         def update_text(NameOfLabel, UpdatedValue):
             # Configuring the text in Label widget
@@ -64,6 +71,7 @@ MyGUI()
 
 ##Other Teams code
 NumOfStrikes = 0
-# while NumOfStrikes <= 3:
-#     if(random.randint(1,10) == 5):
+while NumOfStrikes <= 3:
+    if(random.randint(1,10) == 5):
+        MyGUI.Load1stStrike()
         
