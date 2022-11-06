@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter.ttk import *
 from PIL import Image, ImageTk
 import random
+import threading
 
 class MyGUI:
 
@@ -60,11 +61,33 @@ class MyGUI:
             # Configuring the text in Label widget
             self.NameOfLabel.configure(text=UpdatedValue)
 
+        #Debuging Values
+        RandomNumber = Label(root, text="Not Working!")
+        RandomNumber.grid(column = 2, row = 6)
+
+        def DebuggingValue():
+            DebugInt = 0
+            while(DebugInt < 100):
+                RandomNumber.config(text=f'Random Number: {random.randint(1,100)}')
+                DebugInt += 1
+                time.sleep(1)
+
         DropdownMenue()
         LoadLogo()
         LoadDashboard()
         self.root.mainloop()
 
-MyGUI()
+
+
+def run_thread():
+    db = threading.Thread(target = MyGUI.DebuggingValue())
+    db.start()
+    db.join()
+    db = threading.Thread(target = MyGUI)
+    db.start()
+    db.join()
+
+run_thread()
+
 
    
