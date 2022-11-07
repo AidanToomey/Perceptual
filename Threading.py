@@ -11,6 +11,10 @@ import threading
 import pyautogui as mouse
 import matplotlib.pyplot as plt
 
+#Created Global Array
+x = []
+y = []
+
 root = tk.Tk()
 root.title("Perceptual Threading")
 root.geometry("900x600")
@@ -45,9 +49,6 @@ def LoadDashboard():
 
 def MouseGraph():
     control = True
-
-    x = []
-    y = []
     count = 0
     t = 1
     inc = .1
@@ -73,11 +74,11 @@ def MouseGraph():
 
         if count > 100:
             control = False
-            return(x, y)
-            # plt.plot(x, y)
-            # plt.xlabel('time')
-            # plt.ylabel('distance turned')
-            # plt.show()
+            # return(x, y)
+            plt.plot(x, y)
+            plt.xlabel('time')
+            plt.ylabel('distance turned')
+            plt.show()
         time.sleep(inc)
 
 
