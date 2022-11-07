@@ -75,10 +75,10 @@ def MouseGraph():
         if count > 100:
             control = False
             # return(x, y)
-            plt.plot(x, y)
-            plt.xlabel('time')
-            plt.ylabel('distance turned')
-            plt.show()
+            # plt.plot(x, y)
+            # plt.xlabel('time')
+            # plt.ylabel('distance turned')
+            # plt.show()
         time.sleep(inc)
 
 
