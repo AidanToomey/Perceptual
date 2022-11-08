@@ -2,6 +2,15 @@ import pyautogui as mouse
 import time
 import matplotlib.pyplot as plt
 
+import tkinter as tk
+from tkinter import *
+from tkinter import ttk
+import tkinter
+from PIL import Image, ImageTk
+
+
+
+
 screenY = 540
 
 #x = []
@@ -24,6 +33,7 @@ while True:
 
     if pValues[0] >= 1910: mouse.moveTo(1, screenY)
     if pValues[0] <= 0: mouse.moveTo(1919, screenY)
+
 
 
 """
