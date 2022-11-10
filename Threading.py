@@ -18,7 +18,7 @@ y = []
 
 root = tk.Tk()
 root.title("Perceptual Threading")
-root.geometry("900x600")
+root.geometry("1600x600")
 
 #Sperates the canvase into diffrent coloms
 root.columnconfigure(6, weight = 0)
@@ -38,21 +38,21 @@ def LoadLogo():
     logo = ImageTk.PhotoImage(logo)
     logo_label = tk.Label(image = logo)
     logo_label.image = logo
-    logo_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
+    logo_label.grid(column=0, row=0)
 
 #Load Dashboard
 def LoadDashboard():
     Dashboard = Image.open("Mercades Dashboard .jpeg")
-    Dashboard = Dashboard.resize((775,300))
+    Dashboard = Dashboard.resize((1000,400))
     Dashboard = ImageTk.PhotoImage(Dashboard)
     Dashboard_label = tk.Label(image = Dashboard)
     Dashboard_label.image = Dashboard
-    Dashboard_label.grid(column = 2, row = 6, columnspan=3, rowspan=2)
+    Dashboard_label.grid(column = 6, row = 0, columnspan=3, rowspan=2)
 
 #Load Plot
 def LoadPlot():
     # the figure that will contain the plot
-    fig = Figure(figsize = (5, 5),dpi = 100)
+    fig = Figure(figsize = (4, 4),dpi = 100)
   
     # list of squares
   
@@ -60,8 +60,12 @@ def LoadPlot():
     plot1 = fig.add_subplot(111)
   
     # plotting the graph
-    plot1.plot(y)
-  
+    plot1.plot(x,y)
+
+    #Labels
+    # plot1.xlabel('time')
+    # plot1.ylabel('distance turned')
+
     # creating the Tkinter canvas
     # containing the Matplotlib figure
     canvas = FigureCanvasTkAgg(fig, master = root)  
@@ -71,11 +75,13 @@ def LoadPlot():
     canvas.get_tk_widget().grid(column = 2, row = 0, columnspan=3, rowspan=2)
   
     # creating the Matplotlib toolbar
-    toolbar = NavigationToolbar2Tk(canvas, root)
-    toolbar.update()
+    #toolbar = NavigationToolbar2Tk(canvas, root)
+    #toolbar.update()
   
     # placing the toolbar on the Tkinter window
     canvas.get_tk_widget().grid()
+
+    
 
 def MouseGraph():
     control = True
