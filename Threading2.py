@@ -52,35 +52,17 @@ def LoadDashboard():
 
 #Load Plot
 def LoadPlot():
-    # the figure that will contain the plot
-    #fig = Figure(figsize = (4, 4),dpi = 100)
+    # enable interactive mode
+    plt.ion()
+ 
+    # creating subplot and figure
     fig = plt.figure()
-    # list of squares
-  
-    # adding the subplot
-    plot1 = fig.add_subplot(111)
-  
-    # plotting the graph
-    plot1.plot(x,y)
-
-    #Labels
-    # plot1.xlabel('time')
-    # plot1.ylabel('distance turned')
-
-    # creating the Tkinter canvas
-    # containing the Matplotlib figure
-    canvas = FigureCanvasTkAgg(fig, master = root)  
-    canvas.draw()
-  
-    # placing the canvas on the Tkinter window
-    canvas.get_tk_widget().grid(column = 2, row = 0, columnspan=3, rowspan=2)
-  
-    # creating the Matplotlib toolbar
-    #toolbar = NavigationToolbar2Tk(canvas, root)
-    #toolbar.update()
-  
-    # placing the toolbar on the Tkinter window
-    canvas.get_tk_widget().grid()
+    ax = fig.add_subplot(111)
+    line1, = ax.plot(x, y)
+ 
+    # setting labels
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
 
 def RefreshGraph():
     # updating the value of x and y
