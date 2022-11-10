@@ -1,7 +1,6 @@
 import time
 
 import tkinter as tk
-#import tkinter as tkk
 from tkinter.ttk import *
 from PIL import Image, ImageTk
 import random
@@ -10,7 +9,8 @@ import threading
 #imports for BackEnd
 import pyautogui as mouse
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 
 #Created Global Array
 x = []
@@ -40,6 +40,7 @@ def LoadLogo():
     logo_label.image = logo
     logo_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
 
+#Load Dashboard
 def LoadDashboard():
     Dashboard = Image.open("Mercades Dashboard .jpeg")
     Dashboard = Dashboard.resize((775,300))
@@ -47,6 +48,34 @@ def LoadDashboard():
     Dashboard_label = tk.Label(image = Dashboard)
     Dashboard_label.image = Dashboard
     Dashboard_label.grid(column = 2, row = 6, columnspan=3, rowspan=2)
+
+#Load Plot
+def LoadPlot():
+    # the figure that will contain the plot
+    fig = Figure(figsize = (5, 5),dpi = 100)
+  
+    # list of squares
+  
+    # adding the subplot
+    plot1 = fig.add_subplot(111)
+  
+    # plotting the graph
+    plot1.plot(y)
+  
+    # creating the Tkinter canvas
+    # containing the Matplotlib figure
+    canvas = FigureCanvasTkAgg(fig, master = root)  
+    canvas.draw()
+  
+    # placing the canvas on the Tkinter window
+    canvas.get_tk_widget().grid(column = 2, row = 0, columnspan=3, rowspan=2)
+  
+    # creating the Matplotlib toolbar
+    toolbar = NavigationToolbar2Tk(canvas, root)
+    toolbar.update()
+  
+    # placing the toolbar on the Tkinter window
+    canvas.get_tk_widget().grid()
 
 def MouseGraph():
     control = True
@@ -75,34 +104,27 @@ def MouseGraph():
 
         if count > 100:
             control = False
-            return(x, y)
-            plt.plot(x, y)
-            plt.xlabel('time')
-            plt.ylabel('distance turned')
-            plt.show()
-            figure = plt.Figure(figsize=(6,5), dpi=100)
-            ax = figure.add_subplot(111)
-            chart_type = FigureCanvasTkAgg(figure, root)
-            chart_type.get_tk_widget().pack()
-            df = df[['First Column','Second Column']].groupby('First Column').sum()
-            df.plot(kind='Chart Type such as bar', legend=True, ax=ax)
-            ax.set_title('The Title for your chart')
+            break
         time.sleep(inc)
 
 
 DebugNumber = Label(root, text="Debug Number!")
-DebugNumber.grid(column= 6, row= 0, sticky=tk.E)
+DebugNumber.grid(column= 0, row= 1)
 
 StartBackendDebug = Button(root, text="Start the BackendDebug", command = threading.Thread(target=BackEndDebug).start)
-StartBackendDebug.grid(column= 5, row= 0, sticky=tk.E)
+StartBackendDebug.grid(column= 0, row= 2)
 
-StartGraph = Label(root, text="Start Graph!")
-StartGraph.grid(column= 6, row= 1, sticky=tk.E)
+BlankSpace = Label(root, text="")
+BlankSpace.grid(column= 0, row= 3)
+
+StartGraph = Label(root, text="Data Collection")
+StartGraph.grid(column= 0, row= 4)
 
 StartGraphButton = Button(root, text="Begin", command = threading.Thread(target=MouseGraph).start)
-StartGraphButton.grid(column= 5, row= 1, sticky=tk.E)
+StartGraphButton.grid(column= 0, row= 5)
 
 LoadLogo()
 LoadDashboard()
+LoadPlot()
 
 root.mainloop()
