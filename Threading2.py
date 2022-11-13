@@ -11,11 +11,17 @@ import pyautogui as mouse
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+import pandas as pd
 
 
 #Created Global Array
 x = []
 y = []
+data = {'interest_rate': [5, 5.5, 6, 5.5, 5.25, 6.5, 7, 8, 7.5, 8.5],
+         'index_price': [1500, 1520, 1525, 1523, 1515, 1540, 1545, 1560, 1555, 1565]
+        }
+df2 = pd.DataFrame(data)
+
 
 root = tk.Tk()
 root.title("Perceptual Threading")
@@ -51,18 +57,23 @@ def LoadDashboard():
     Dashboard_label.grid(column = 6, row = 0, columnspan=3, rowspan=2)
 
 #Load Plot
-def LoadPlot():
-    # enable interactive mode
-    plt.ion()
- 
-    # creating subplot and figure
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    line1, = ax.plot(x, y)
- 
-    # setting labels
-    plt.xlabel("X-axis")
-    plt.ylabel("Y-axis")
+# def LoadPlot():
+#     figure2 = plt.Figure(figsize=(5, 4), dpi=100)
+#     ax2 = figure2.add_subplot(111)
+#     line2 = FigureCanvasTkAgg(figure2, root)
+#     line2.get_tk_widget().grid(column=1, row= 0)
+#     df2 = df2[['year', 'unemployment_rate']].groupby('year').sum()
+#     #df2 = [x,y]
+#     df2.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
+#     ax2.set_title('Year Vs. Unemployment Rate')
+
+figure2 = plt.Figure(figsize=(5, 4), dpi=100)
+ax2 = figure2.add_subplot(111)
+line2 = FigureCanvasTkAgg(figure2, root)
+line2.get_tk_widget().grid(column = 8,row = 8)
+df2 = df2[['year', 'unemployment_rate']].groupby('year').sum()
+df2.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
+ax2.set_title('Year Vs. Unemployment Rate')
 
 def RefreshGraph():
     # updating the value of x and y
@@ -121,7 +132,7 @@ StartGraph.grid(column= 0, row= 4)
 
 StartGraphButton = Button(root, text="Begin", command = threading.Thread(target=MouseGraph).start)
 StartGraphButton.grid(column= 0, row= 5)
-t1 = threading.Thread(target=RefreshGraph, args=[])
+#t1 = threading.Thread(target=RefreshGraph, args=[])
 
 
 LoadLogo()
