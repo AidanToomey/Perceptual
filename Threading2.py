@@ -1,18 +1,17 @@
-import time
-
-import tkinter as tk
-from tkinter.ttk import *
-from PIL import Image, ImageTk
 import random
 import threading
+import time
+import tkinter as tk
+from tkinter.ttk import *
 
+import matplotlib.pyplot as plt
+import pandas as pd
 #imports for BackEnd
 import pyautogui as mouse
-import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
+                                               NavigationToolbar2Tk)
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
-import pandas as pd
-
+from PIL import Image, ImageTk
 
 #Created Global Array
 x = []
@@ -63,9 +62,9 @@ LoadDashboard()
 figure2 = plt.Figure(figsize=(5, 4), dpi=100)
 ax2 = figure2.add_subplot(111)
 line2 = FigureCanvasTkAgg(figure2, root)
-line2.get_tk_widget().grid(column = 6,row = 0)
+line2.get_tk_widget().grid(column = 6, row = 0)
 df2 = df2[['x', 'y']].groupby('x').sum()
-df2.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
+df2.plot(kind='line', legend=True, ax=ax2, color='b', marker='', fontsize=10)
 ax2.set_title('Blank Graph')
 ax2.set(xlabel='Time', ylabel='y-axis label')
 
@@ -82,40 +81,9 @@ def RefreshGraph():
     line2 = FigureCanvasTkAgg(figure2, root)
     line2.get_tk_widget().grid(column = 6,row = 0)
     dfN = dfN[['x', 'y']].groupby('x').sum()
-    dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='', fontsize=10)
-    ax2.set_title('Year Vs. Unemployment Rate')    
-
-def MouseGraph():
-    control = True
-    count = 0
-    t = 1
-    inc = .1
-    check1, check2, check3 = 0, 1, 2
-    screenY = 540
-    turns = 0
-
-    mouse.moveTo(960, screenY)
-    while control:
-        thing = mouse.position()
-        y.append(thing[0] - 960)
-        x.append(inc * t)
-        if thing[1] > 540 or thing[1] < 540:
-            mouse.moveTo(thing[0], 540)
-        count += 1
-        t += 1
-        if count > 2:
-            if (y[check2] < y[check1] and y[check2] < y[check3]) or (y[check2] == y[check1] and y[check2] < y[check3]):
-                print(f'{y[check2]} is the relative minimum.')
-            if (y[check2] > y[check1] and y[check2] > y[check3]) or (y[check2] == y[check1] and y[check2] > y[check3]):
-                print(f'{y[check2]} is the relative maximum.')
-            check1 += 1
-            check2 += 1
-            check3 += 1
-
-        if count > 100:
-            control = False
-            break
-        time.sleep(inc)
+    dfN.plot(kind='line', legend=True, ax=ax2, color='b', marker='', fontsize=10)
+    ax2.set_title('Blank Graph')    
+    
 
 def MouseGraph2():
     control = True
@@ -166,6 +134,7 @@ def MouseGraph2():
             RefreshGraph()
             break
         time.sleep(inc)
+
 
 DebugNumber = Label(root, text="Debug Number!")
 DebugNumber.grid(column= 0, row= 1)
