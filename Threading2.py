@@ -66,7 +66,8 @@ line2 = FigureCanvasTkAgg(figure2, root)
 line2.get_tk_widget().grid(column = 6,row = 0)
 df2 = df2[['x', 'y']].groupby('x').sum()
 df2.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
-ax2.set_title('Year Vs. Unemployment Rate')
+ax2.set_title('Blank Graph')
+ax2.set(xlabel='Time', ylabel='y-axis label')
 
 def RefreshGraph():
     # updating the value of x and y
@@ -81,7 +82,7 @@ def RefreshGraph():
     line2 = FigureCanvasTkAgg(figure2, root)
     line2.get_tk_widget().grid(column = 6,row = 0)
     dfN = dfN[['x', 'y']].groupby('x').sum()
-    dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
+    dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='', fontsize=10)
     ax2.set_title('Year Vs. Unemployment Rate')    
 
 def MouseGraph():
@@ -160,7 +161,7 @@ def MouseGraph2():
             check2 += 1
             check3 += 1
 
-        if count > 200:
+        if count > 100:
             control = False
             break
         time.sleep(inc)
