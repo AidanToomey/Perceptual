@@ -163,6 +163,7 @@ def MouseGraph2():
 
         if count > 100:
             control = False
+            RefreshGraph()
             break
         time.sleep(inc)
 
@@ -183,12 +184,6 @@ StartGraphButton.grid(column= 0, row= 5)
 
 BlankSpace = Label(root, text="")
 BlankSpace.grid(column= 0, row= 6)
-
-UpdateGraph = Label(root, text="Update Graph")
-UpdateGraph.grid(column= 0, row= 7)
-
-UpdateGraphButton = Button(root, text="Reset", command = threading.Thread(target=RefreshGraph).start)
-UpdateGraphButton.grid(column= 0, row= 8)
 
 
 root.mainloop()
