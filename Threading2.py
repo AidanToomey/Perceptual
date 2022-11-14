@@ -22,7 +22,6 @@ data = {'interest_rate': [5, 5.5, 6, 5.5, 5.25, 6.5, 7, 8, 7.5, 8.5],
         }
 df2 = pd.DataFrame(data)
 
-
 root = tk.Tk()
 root.title("Perceptual Threading")
 root.geometry("1600x600")
