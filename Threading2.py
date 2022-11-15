@@ -87,19 +87,29 @@ def RefreshGraph():
 
 def MouseGraph2():
     control = True
-    count = 0
+    control = True
+
+    strikes = 0
     t = 1
-    inc = .1
+    inc = .5
     check1, check2, check3 = 0, 1, 2
     screenY = 540
     turns = 0
+    relMax = False
+    Max = 0
+    relMin = False
+    Min = 0
+    safetyPer = 1
+    timesMax = 0
+    timesMin = 0
+    formula = None
 
-    mouse.moveTo(960, screenY)
+    mouse.moveTo(1, screenY)
     while control:
         pValues = mouse.position()
         x.append(inc * t)
 
-        #Makes sure mouse is in the middle of the screen.
+    #Makes sure mouse is in the middle of the screen.
         if pValues[1] > 540 or pValues[1] < 540:
             mouse.moveTo(pValues[0], 540)
 
@@ -114,25 +124,50 @@ def MouseGraph2():
             turns -= 1
     
         if pValues[0] >= 1910 and turns < 0: 
-            mouse.moveTo(10, screenY)
+            mouse.moveTo(1, screenY)
             turns += 1
     
-        count += 1
-        t += 1
 
-        if count > 2:
+        if t > 2:
             if (y[check2] < y[check1] and y[check2] < y[check3]) or (y[check2] == y[check1] and y[check2] < y[check3]):
-                print(f'{y[check2]} is the relative minimum.')
+                print(f'({y[check2]}, {x[-1]}) is the relative minimum.')
+                relMin = True
+                Min = y[check2]
+                timesMin = x[-1]
+                formula = 1
             if (y[check2] > y[check1] and y[check2] > y[check3]) or (y[check2] == y[check1] and y[check2] > y[check3]):
-                print(f'{y[check2]} is the relative maximum.')
+                print(f'({y[check2]}, {x[-1]}) is the relative maximum.')
+                relMax = True
+                Max = y[check2]
+                timesMax = x[-1]
+                formula = 0
+
+            if relMax and relMin:
+                if formula == 0:
+                    print(abs((abs(Max) - abs(Min)) / abs(timesMax) - abs(timesMin)))
+                    print("using increasing formula")
+                    if abs((abs(Max) - abs(Min) / abs(timesMax) - abs(timesMin))) < 30:
+                        strikes += 1
+                        print(strikes)
+                else:
+                    print(abs((abs(Min) - abs(Max)) / abs(timesMin) - abs(timesMax)))
+                    print("using decreasing slope formula")
+                    if abs((abs(Min) - abs(Max) / abs(timesMin) - abs(timesMax))) < 30:
+                        strikes += 1
+                        print(strikes)
+
+                relMax = False
+                relMin = False
+    
             check1 += 1
             check2 += 1
             check3 += 1
+    
+        t += 1
 
-        if count > 100:
+        if strikes > 2:
             control = False
             RefreshGraph()
-            break
         time.sleep(inc)
 
 
