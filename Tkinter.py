@@ -40,7 +40,7 @@ def BackEndDebug():
 
 #Load Logo
 def LoadLogo():
-    logo = Image.open("PerceptualLogoTransparent.png")
+    logo = Image.open("Pictures/PerceptualLogoTransparent.png")
     logo = logo.resize((125, 125))
     logo = ImageTk.PhotoImage(logo)
     logo_label = tk.Label(image = logo)
@@ -49,7 +49,7 @@ def LoadLogo():
 
 #Load Dashboard
 def LoadDashboard():
-    Dashboard = Image.open("Mercades Dashboard .jpeg")
+    Dashboard = Image.open("Pictures/Mercades Dashboard .jpeg")
     Dashboard = Dashboard.resize((1000,400))
     Dashboard = ImageTk.PhotoImage(Dashboard)
     Dashboard_label = tk.Label(image = Dashboard)
