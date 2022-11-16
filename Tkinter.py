@@ -83,7 +83,7 @@ def RefreshGraph():
     line2.get_tk_widget().grid(column = 6,row = 0)
     dfN = dfN[['x', 'y']].groupby('x').sum()
     dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='', fontsize=10)
-    ax2.set_title('Year Vs. Unemployment Rate')    
+    ax2.set_title('Wheel Rotation')    
 
 def MouseGraph():
     control = True
