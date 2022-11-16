@@ -27,6 +27,7 @@ data = {'x': x,
          'y': y
          }
 df2 = pd.DataFrame(data)
+strikes = 0
 
 #----------->
 # GRAPH FUNCTIONS GO HERE 
@@ -54,8 +55,91 @@ def RefreshGraph():
     line2.get_tk_widget().pack(side='right')
     dfN = dfN[['x', 'y']].groupby('x').sum()
     dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
-    ax2.set(xlabel='Time', ylabel='Rotation')
-    ax2.set_title('Wheel Rotation')  
+    ax2.set_title('Wheel Rotation')
+    ax2.set(xlabel='Time', ylabel='Rotation')  
+
+def MouseGraph():
+    control = True
+    strikes = 0
+    t = 1
+    inc = .5
+    check1, check2, check3 = 0, 1, 2
+    screenY = 540
+    turns = 0
+    relMax = False
+    Max = 0
+    relMin = False
+    Min = 0
+    safetyPer = 1
+    timesMax = 0
+    timesMin = 0
+    formula = None
+
+    mouse.moveTo(1, screenY)
+    while control:
+        pValues = mouse.position()
+        x.append(inc * t)
+
+    #Makes sure mouse is in the middle of the screen.
+        if pValues[1] > 540 or pValues[1] < 540:
+            mouse.moveTo(pValues[0], 540)
+
+        if turns > -1: 
+            y.append(int(pValues[0] / 5.333))
+
+        if turns == -1: 
+            y.append(int((pValues[0] - 1920) / 5.333))
+        
+        if pValues[0] <= 0 and turns > -1:
+            mouse.moveTo(1919, screenY)
+            turns -= 1
+    
+        if pValues[0] >= 1910 and turns < 0: 
+            mouse.moveTo(1, screenY)
+            turns += 1
+    
+
+        if t > 2:
+            if (y[check2] < y[check1] and y[check2] < y[check3]) or (y[check2] == y[check1] and y[check2] < y[check3]):
+                print(f'({y[check2]}, {x[-1]}) is the relative minimum.')
+                relMin = True
+                Min = y[check2]
+                timesMin = x[-1]
+                formula = 1
+            if (y[check2] > y[check1] and y[check2] > y[check3]) or (y[check2] == y[check1] and y[check2] > y[check3]):
+                print(f'({y[check2]}, {x[-1]}) is the relative maximum.')
+                relMax = True
+                Max = y[check2]
+                timesMax = x[-1]
+                formula = 0
+
+            if relMax and relMin:
+                if formula == 0:
+                    print(abs((abs(Max) - abs(Min)) / abs(timesMax) - abs(timesMin)))
+                    print("using increasing formula")
+                    if abs((abs(Max) - abs(Min) / abs(timesMax) - abs(timesMin))) < 30:
+                        strikes += 1
+                        print(strikes)
+                else:
+                    print(abs((abs(Min) - abs(Max)) / abs(timesMin) - abs(timesMax)))
+                    print("using decreasing slope formula")
+                    if abs((abs(Min) - abs(Max) / abs(timesMin) - abs(timesMax))) < 30:
+                        strikes += 1
+                        print(strikes)
+
+                relMax = False
+                relMin = False
+    
+            check1 += 1
+            check2 += 1
+            check3 += 1
+    
+        t += 1
+
+        if strikes > 2:
+            control = False
+            RefreshGraph()
+        time.sleep(inc)
 
 def MouseGraph2():
         control = True
@@ -131,7 +215,7 @@ tk.Label(frame(50, 50, 275, 35), bg="{0}".format(bgColor), fg="white", text="PDM
 tk.Label(frame(50, 50, 435, 35), bg="{0}".format(bgColor), fg="{0}".format(bgOffset), text="VERSION 2.0.1:11.16.22").pack()
 
 qButton = tk.Button(frame(10, 10, 330, 65), bg="{0}".format(bgOffset), font="System", command=root.quit, text="EXIT").pack()
-gButton = tk.Button(frame(10, 10, 240, 65), bg="{0}".format(bgOrange), font="System", command = threading.Thread(target=MouseGraph2).start, text="BEGIN TESTING").pack()
+gButton = tk.Button(frame(10, 10, 240, 65), bg="{0}".format(bgOrange), font="System", command = threading.Thread(target=MouseGraph).start, text="BEGIN TESTING").pack()
 #threading.Thread(target=MouseGraph2).start command for ^ 
 
 #----------
