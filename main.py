@@ -23,39 +23,30 @@ bgOrange = '#ec9b45'
 
 x = []
 y = []
-data = {'x': x,
-         'y': y
-         }
+data = {
+    'x': x,
+    'y': y
+}
 df2 = pd.DataFrame(data)
 strikes = 0
 
-#----------->
-# GRAPH FUNCTIONS GO HERE 
-
-# figure2 = plt.Figure(figsize=(5, 4), dpi=100)
-# ax2 = figure2.add_subplot(111)
-# line2 = FigureCanvasTkAgg(figure2, root)
-# line2.get_tk_widget().pack(side='right')
-# df2 = df2[['x', 'y']].groupby('x').sum()
-# df2.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
-# ax2.set_title('Blank Graph')
-# ax2.set(xlabel='Time', ylabel='y-axis label')
+#-----------> FUNCTIONS 
 
 def RefreshGraph():
     # updating the value of x and y
-    NewData = {'x': x,
-         'y': y
-         }
+    NewData = {
+        'x': x,
+        'y': y
+    }
     dfN = pd.DataFrame(NewData)
 
     #Reprint Graph
     figure2 = plt.Figure(figsize=(5, 4), dpi=100)
     ax2 = figure2.add_subplot(111)
-    line2 = FigureCanvasTkAgg(figure2, root)
-    line2.get_tk_widget().pack(side='right')
+    line2 = FigureCanvasTkAgg(figure2, frame(1000, 400, 1350, 325)).get_tk_widget().pack(side='right')
     dfN = dfN[['x', 'y']].groupby('x').sum()
     dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
-    ax2.set_title('Wheel Rotation')
+    ax2.set_title('[POST] Wheel Angle * Time')
     ax2.set(xlabel='Time', ylabel='Rotation')  
 
 def MouseGraph():
@@ -66,13 +57,11 @@ def MouseGraph():
     check1, check2, check3 = 0, 1, 2
     screenY = 540
     turns = 0
-    relMax = False
-    Max = 0
-    relMin = False
-    Min = 0
+
+    relMax, relMin = False, False
+    Max, Min = 0, 0
     safetyPer = 1
-    timesMax = 0
-    timesMin = 0
+    timesMax, timesMin = 0, 0 
     formula = None
 
     mouse.moveTo(1, screenY)
@@ -140,10 +129,10 @@ def MouseGraph():
 
         if strikes > 2:
             control = False
+            RefreshGraph()
             break
+
         time.sleep(inc)
-
-
 
 #----------> CREATE CANVAS
 root.title("Perceptual PDM Testing")
@@ -151,7 +140,6 @@ root.geometry("{0}x{1}+100+200".format(canvasX, canvasY))
 root['background'] = bgColor
 root.resizable(0,0) 
 
-#---Frame Function 
 def frame(widthIn, heightIn, xIn, yIn): 
     frame = tk.Frame(root, width=widthIn, height=heightIn)#
     frame.pack()
@@ -162,6 +150,7 @@ def frame(widthIn, heightIn, xIn, yIn):
 #---Screen Elements
 logo = ImageTk.PhotoImage(Image.open("Pictures/PerceptualLogoTransparent.png").resize((150, 100))) 
 logo_label = tk.Label(frame(150, 150, 100, 55), image=logo, bg="{0}".format(bgColor)).pack()
+
 Dashboard = ImageTk.PhotoImage(Image.open("Pictures/Mercades Dashboard .jpeg").resize((1000,400)))
 Dashboard_label = tk.Label(frame(1000, 400, 550, 325), image=Dashboard, bg="{0}".format(bgColor)).pack()
 
@@ -170,10 +159,14 @@ tk.Label(frame(50, 50, 435, 35), bg="{0}".format(bgColor), fg="{0}".format(bgOff
 
 qButton = tk.Button(frame(10, 10, 330, 65), bg="{0}".format(bgOffset), font="System", command=root.quit, text="EXIT").pack()
 gButton = tk.Button(frame(10, 10, 240, 65), bg="{0}".format(bgOrange), font="System", command = threading.Thread(target=MouseGraph).start, text="BEGIN TESTING").pack()
-#threading.Thread(target=MouseGraph2).start command for ^ 
+
+figure2 = plt.Figure(figsize=(5, 4), dpi=100)
+ax2 = figure2.add_subplot(111)
+line2 = FigureCanvasTkAgg(figure2, frame(1000, 400, 1350, 325)).get_tk_widget().pack(side='right')
+df2 = df2[['x', 'y']].groupby('x').sum()
+df2.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
+ax2.set_title('Wheel Angle * Time')
 
 #----------
-
-
 
 root.mainloop()
