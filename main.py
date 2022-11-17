@@ -16,6 +16,7 @@ import pandas as pd
 #----------> VARIABLES 
 root = tk.Tk()
 
+screenX, screenY = 1920, 1080
 canvasX, canvasY = 1650, 600
 bgColor = '#131418' 
 bgOffset = '#91a1ad'
@@ -45,86 +46,82 @@ def RefreshGraph():
     ax2 = figure2.add_subplot(111)
     line2 = FigureCanvasTkAgg(figure2, frame(1000, 400, 1350, 325)).get_tk_widget().pack(side='right')
     dfN = dfN[['x', 'y']].groupby('x').sum()
-    dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
+    dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='', fontsize=10)
     ax2.set_title('[POST] Wheel Angle * Time')
     ax2.set(xlabel='Time', ylabel='Rotation')  
 
-def MouseGraph():
-    control = True
-    strikes = 0
+def clamp(num, min_value, max_value):
+   return max(min(num, max_value), min_value)
+
+def MouseGraph(): 
+    mouse.moveTo(10, 540)
+    
+    mouse_val_x = mouse.position()[0]
+    mouse_val_change = 0 
+    mouse_val_distance = 0
+
+    wheel_val_deg = 0
+
     t = 1
-    inc = .1
+    inc = 0.1
     check1, check2, check3 = 0, 1, 2
-    screenY = 540
-    turns = 0
-
-    relMax, relMin = False, False
+    relMax, relMin = False, False 
     Max, Min = 0, 0
-    safetyPer = 1
-    timesMax, timesMin = 0, 0 
-    formula = None
+    timesMax, timesMin = 0, 0
+    strikes = 0
 
-    mouse.moveTo(1, screenY)
-    while control:
-        pValues = mouse.position()
+    time.sleep(3)
+    while True:
+        mouse_val_x = mouse.position()[0]
+
+        if (mouse_val_x >= screenX - 2): mouse.moveTo(5, screenY / 2); mouse_val_x = 5
+        elif (mouse_val_x <= 2): mouse.moveTo(1915, screenY / 2); mouse_val_x = 1915
+        else: mouse_val_x = mouse.position()[0]
+
+        time.sleep(0.01)
+
+        mouse_val_change = mouse.position()[0] - mouse_val_x    
+        mouse_val_distance = clamp((mouse_val_distance + mouse_val_change), -(screenX), screenX) 
+
+        wheel_val_deg = mouse_val_distance / screenX * 360
+
         x.append(inc * t)
-
-        #Makes sure mouse is in the middle of the screen.
-        if pValues[1] > 540 or pValues[1] < 540:
-            mouse.moveTo(pValues[0], 540)
-
-        if turns > -1: 
-            y.append(int(pValues[0] / 5.333))
-
-        if turns == -1: 
-            y.append(int((pValues[0] - 1920) / 5.333))
-        
-        if pValues[0] <= 0 and turns > -1:
-            mouse.moveTo(1919, screenY)
-            turns -= 1
-    
-        if pValues[0] >= 1910 and turns < 0: 
-            mouse.moveTo(1, screenY)
-            turns += 1
-    
+        y.append(wheel_val_deg)
 
         if t > 2:
             if (y[check2] < y[check1] and y[check2] < y[check3]) or (y[check2] == y[check1] and y[check2] < y[check3]):
-                print(f'({y[check2]}, {x[-1]}) is the relative minimum.')
+                #print(f'({y[check2]}, {x[-1]}) is the relative minimum.')
                 relMin = True
                 Min = y[check2]
                 timesMin = x[-1]
                 formula = 1
             if (y[check2] > y[check1] and y[check2] > y[check3]) or (y[check2] == y[check1] and y[check2] > y[check3]):
-                print(f'({y[check2]}, {x[-1]}) is the relative maximum.')
+                #print(f'({y[check2]}, {x[-1]}) is the relative maximum.')
                 relMax = True
                 Max = y[check2]
                 timesMax = x[-1]
                 formula = 0
 
             if Max > Min:
-                y2 = Max
-                y1 = Min
-                x2 = timesMax
-                x1 = timesMin
+                y2, y1 = Max, Min
+                x2, x1 = timesMax, timesMin
         
             else:
-                y1 = Max
-                y2 = Min
-                x1 = timesMax
-                x2 = timesMin
+                y1, y2 = Max, min
+                x1, x2 = timesMax, timesMin
 
             if relMax and relMin:
-                if abs((y2 - y1) / (x2 - x1)) > 300:
+                print(abs((y2 - y1) / (x2 - x1)))
+
+                if abs((y2 - y1) / (x2 - x1)) > 200:
+            
                     strikes += 1
                     print(strikes)
-                relMax = False
-                relMin = False
+                relMax, relMin = False, False
     
             check1 += 1
             check2 += 1
             check3 += 1
-    
         t += 1
 
         if strikes > 2:
@@ -132,8 +129,7 @@ def MouseGraph():
             RefreshGraph()
             break
 
-        time.sleep(inc)
-
+            
 #----------> CREATE CANVAS
 root.title("Perceptual PDM Testing")
 root.geometry("{0}x{1}+100+200".format(canvasX, canvasY))

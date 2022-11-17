@@ -1,0 +1,98 @@
+    control = True
+    strikes = 0
+    t = 1
+    inc = .1
+    check1, check2, check3 = 0, 1, 2
+    screenY = 540
+    turns = 0
+
+    relMax, relMin = False, False
+    Max, Min = 0, 0
+    safetyPer = 1
+    timesMax, timesMin = 0, 0 
+    formula = None
+
+    vWheel_Degree = 0 
+
+    time.sleep(5)
+    while control:
+        pValues = mouse.position()
+        x.append(inc * t)
+
+        change = pValues[0] 
+
+        """
+        if pValues[0] <= 100 and turns > -1:
+            mouse.moveTo(1600, screenY)
+            turns -= 1
+        if pValues[0] >= 1800 and turns < 0 and turns < 1: 
+            mouse.moveTo(55, screenY)
+            turns += 1
+
+        if turns > -1: 
+            y.append(int(pValues[0] / 5.333))
+        if turns == -1: 
+            y.append(int((pValues[0] - 1920) / 5.333))
+        """
+
+        if t > 2:
+            if (y[check2] < y[check1] and y[check2] < y[check3]) or (y[check2] == y[check1] and y[check2] < y[check3]):
+                print(f'({y[check2]}, {x[-1]}) is the relative minimum.')
+                relMin = True
+                Min = y[check2]
+                timesMin = x[-1]
+                formula = 1
+            if (y[check2] > y[check1] and y[check2] > y[check3]) or (y[check2] == y[check1] and y[check2] > y[check3]):
+                print(f'({y[check2]}, {x[-1]}) is the relative maximum.')
+                relMax = True
+                Max = y[check2]
+                timesMax = x[-1]
+                formula = 0
+
+            if Max > Min:
+                y2 = Max
+                y1 = Min
+                x2 = timesMax
+                x1 = timesMin
+        
+            else:
+                y1 = Max
+                y2 = Min
+                x1 = timesMax
+                x2 = timesMin
+
+            if relMax and relMin:
+                if abs((y2 - y1) / (x2 - x1)) > 300:
+                    strikes += 1
+                    print(strikes)
+                relMax = False
+                relMin = False
+    
+            check1 += 1
+            check2 += 1
+            check3 += 1
+    
+        t += 1
+
+        if strikes > 2:
+            control = False
+            RefreshGraph()
+            break
+
+        time.sleep(inc)
+
+
+
+
+        
+        iniMouseX = mouse.position()[0] 
+        time.sleep(0.0000001)
+        changeMouseX = iniMouseX - mouse.position()[0]
+
+        print(changeMouseX)
+
+        
+
+
+
+        time.sleep(0.001)
