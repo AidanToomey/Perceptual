@@ -32,6 +32,21 @@ df2 = pd.DataFrame(data)
 strikes = 0
 
 #-----------> FUNCTIONS 
+def Strike1():
+    Strike1 = ImageTk.PhotoImage(Image.open("Pictures/1st Strike Distracted driving.jpeg"))
+    FrameStrike1 = frame(125, 125, 250, 300)
+    Strike1_label = tk.Label(FrameStrike1, image=Strike1).pack()
+    time.sleep(5)
+    FrameStrike1.destroy()
+
+
+def Strike2(): 
+     Strike2 = ImageTk.PhotoImage(Image.open("Pictures/2nd Strike Distracted driving.jpeg"))
+     FrameStrike2 = frame(125, 125, 250, 250)
+     Strike2_label = tk.Label(FrameStrike2, image=Strike2).pack()
+     time.sleep(5)
+     FrameStrike2.destroy()
+
 
 def RefreshGraph():
     # updating the value of x and y
@@ -124,7 +139,18 @@ def MouseGraph():
             check3 += 1
         t += 1
 
-        if strikes > 2:
+        if strikes == 1: 
+            strikes += 1
+            Strike1t = threading.Thread(target=Strike1)
+            Strike1t.start()
+
+        if strikes == 3:
+           strikes += 1 
+           Strike2t = threading.Thread(target=Strike2)
+           Strike2t.start()
+
+
+        if strikes > 5:
             control = False
             RefreshGraph()
             break
