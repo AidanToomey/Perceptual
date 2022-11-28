@@ -32,6 +32,7 @@ df2 = pd.DataFrame(data)
 strikes = 0
 
 #-----------> FUNCTIONS 
+#Strike 1 and Strike 2 Made By Stone Nguyen 
 def Strike1():
     Strike1 = ImageTk.PhotoImage(Image.open("Pictures/1st Strike Distracted driving.jpeg"))
     FrameStrike1 = frame(125, 125, 250, 300)
@@ -47,7 +48,7 @@ def Strike2():
      time.sleep(5)
      FrameStrike2.destroy()
 
-
+#RefreshGraph Made By Aidan Toomey, Helped by Stone Nguyen  
 def RefreshGraph():
     # updating the value of x and y
     NewData = {
@@ -64,10 +65,10 @@ def RefreshGraph():
     dfN.plot(kind='line', legend=True, ax=ax2, color='r', marker='', fontsize=10)
     ax2.set_title('[POST] Wheel Angle * Time')
     ax2.set(xlabel='Time', ylabel='Rotation')  
-
+#clamp Made By Jack Brewster 
 def clamp(num, min_value, max_value):
    return max(min(num, max_value), min_value)
-
+#MouseGraph Mainly Made By Sean Bevensee and Jack Brewster, Helped by Stone Nguyen and Aidan Toomey
 def MouseGraph(): 
     mouse.moveTo(10, 540)
     
@@ -157,6 +158,7 @@ def MouseGraph():
 
             
 #----------> CREATE CANVAS
+#GUI Primarly Made By Aidan Toomey and Sean Bevennsee, Helped By Stone Nguyen and Amy Prieto 
 root.title("Perceptual PDM Testing")
 root.geometry("{0}x{1}+100+200".format(canvasX, canvasY))
 root['background'] = bgColor
@@ -190,5 +192,6 @@ df2.plot(kind='line', legend=True, ax=ax2, color='r', marker='o', fontsize=10)
 ax2.set_title('Wheel Angle * Time')
 
 #----------
+#Overall Everybody Chipped In Their Part and It Was Hard To Comment On Who Did What Because We All Helped Each Other On Everything. 
 
 root.mainloop()
